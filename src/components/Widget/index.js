@@ -1,6 +1,6 @@
 import React, { useRef, useCallback, useState } from 'react';
 import { View, TouchableOpacity, TextInput, Animated } from 'react-native';
-import { Minus, Plus, X, Translate } from 'phosphor-react-native';
+import { Plus } from 'phosphor-react-native';
 
 import { inputWidth, buttonWidth, styles } from './styles';
 import { themes } from '../../themes';
