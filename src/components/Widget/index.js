@@ -72,7 +72,7 @@ export function Widget() {
             transform: [{
               rotate: showInput.interpolate({
                 inputRange: [0, 1],
-                outputRange: ["0deg", "-45deg"]
+                outputRange: ["0deg", "-225deg"]
               })
             }]
           }}
