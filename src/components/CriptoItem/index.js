@@ -5,11 +5,16 @@ import { CriptoValue } from '../CriptoValue';
 
 import { styles } from './styles';
 
-export function CriptoItem() {
+export function CriptoItem({ coin, setIsAnyMenuOpened, isAnyMenuOpened }) {
   return (
     <View style={styles.container}>
-      <CriptoValue />
-      <CriptoSideMenuButton />
+      <CriptoValue
+        coin={coin}
+      />
+      <CriptoSideMenuButton
+        setIsAnyMenuOpened={setIsAnyMenuOpened}
+        isAnyMenuOpened={isAnyMenuOpened}
+      />
     </View>
   );
 }
