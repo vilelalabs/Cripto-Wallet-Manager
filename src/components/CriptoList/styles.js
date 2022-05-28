@@ -7,6 +7,5 @@ export const styles = StyleSheet.create({
     width: '90%',
     margin: 10,
     padding: 10,
-
   }
 });
