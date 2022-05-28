@@ -11,5 +11,13 @@ export const styles = StyleSheet.create({
     marginRight: 5,
     borderRadius: 50,
     backgroundColor: themes.colors.fifth
+  },
+  buttons: {
+    flex: 1,
+    marginTop: 10,
+    marginBottom: 10,
+    flexDirection: "column",
+    justifyContent: "space-between",
+
   }
 });
