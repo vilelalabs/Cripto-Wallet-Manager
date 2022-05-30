@@ -7,6 +7,7 @@ import { themes } from '../../themes';
 import { styles } from './styles';
 
 export function CriptoSideMenuButton({
+  setIsPopupOpened,
   setIsAnyMenuOpened,
   isAnyMenuOpened,
   scrollViewCenterHeight,
@@ -19,9 +20,6 @@ export function CriptoSideMenuButton({
   const showMenu = useRef(new Animated.Value(0)).current;
 
   const handleOpenMenu = useCallback(() => {
-
-    //console.log('scrollViewCenterHeight:', scrollViewCenterHeight);
-    //console.log('itemPositionCenterHeight:', itemPositionCenterHeight);
 
     if (isMenuOpen) {
       setIsMenuOpen(false);
@@ -46,9 +44,16 @@ export function CriptoSideMenuButton({
       }
     }
 
-  }
-    , [isMenuOpen, isAnyMenuOpened, setIsMenuOpen, setIsAnyMenuOpened]);
+  }, [isMenuOpen, isAnyMenuOpened, setIsMenuOpen, setIsAnyMenuOpened]);
 
+  const handleAddQuantity = useCallback(() => {
+    console.log('add quantity');
+    setIsPopupOpened(true);
+  }, []);
+
+  const handleDeleteCoin = useCallback(() => {
+    console.log('delete coin');
+  }, []);
 
   return (
     <Animated.View style={{
@@ -84,10 +89,18 @@ export function CriptoSideMenuButton({
           <TouchableOpacity onPress={handleOpenMenu}>
             <X weight='bold' size={32} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleOpenMenu}>
+
+          <TouchableOpacity onPress={() => {
+            handleOpenMenu();
+            handleAddQuantity();
+          }}>
             <CurrencyDollar weight='bold' size={32} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleOpenMenu}>
+
+          <TouchableOpacity onPress={() => {
+            handleOpenMenu();
+            handleDeleteCoin();
+          }}>
             <Minus weight='bold' size={32} />
           </TouchableOpacity>
         </View>
@@ -100,5 +113,6 @@ export function CriptoSideMenuButton({
         </TouchableOpacity>
       }
     </Animated.View >
+
   );
 }

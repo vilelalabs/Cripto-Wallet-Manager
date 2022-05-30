@@ -7,6 +7,7 @@ import { styles } from './styles';
 
 export function CriptoItem({
   coin,
+  setIsPopupOpened,
   setIsAnyMenuOpened,
   isAnyMenuOpened,
   scrollViewCenterHeight,
@@ -32,6 +33,7 @@ export function CriptoItem({
         coin={coin}
       />
       <CriptoSideMenuButton
+        setIsPopupOpened={setIsPopupOpened}
         setIsAnyMenuOpened={setIsAnyMenuOpened}
         isAnyMenuOpened={isAnyMenuOpened}
         scrollViewCenterHeight={scrollViewCenterHeight}

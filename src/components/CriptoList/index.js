@@ -63,7 +63,9 @@ const addedCoins = [
 
 ];
 
-export function CriptoList() {
+const singleCoinHeight = 70;
+
+export function CriptoList({ setIsPopupOpened }) {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
   const [scrollViewContentYOffset, setScrollViewContentYOffset] = useState(0);
@@ -86,9 +88,10 @@ export function CriptoList() {
             setMenuOpenedNumber={setMenuOpenedNumber}
             menuOpenedNumber={menuOpenedNumber}
 
+            setIsPopupOpened={setIsPopupOpened}
             setIsAnyMenuOpened={setIsAnyMenuOpened}
             isAnyMenuOpened={isAnyMenuOpened}
-            scrollViewCenterHeight={scrollViewCenterHeight + scrollViewContentYOffset}
+            scrollViewCenterHeight={scrollViewCenterHeight + scrollViewContentYOffset + singleCoinHeight}
 
             coin={coin}
           />
