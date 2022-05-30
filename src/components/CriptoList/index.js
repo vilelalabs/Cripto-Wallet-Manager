@@ -65,6 +65,7 @@ const addedCoins = [
 export function CriptoList() {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
+  const [menuOpenedNumber, setMenuOpenedNumber] = useState(null);
 
 
   return (
@@ -76,6 +77,10 @@ export function CriptoList() {
 
         <CriptoItem
           key={index}
+          selfKey={index}
+          setMenuOpenedNumber={setMenuOpenedNumber}
+          menuOpenedNumber={menuOpenedNumber}
+
           setIsAnyMenuOpened={setIsAnyMenuOpened}
           isAnyMenuOpened={isAnyMenuOpened}
           scrollViewCenterHeight={scrollViewCenterHeight}

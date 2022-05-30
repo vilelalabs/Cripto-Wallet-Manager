@@ -11,6 +11,8 @@ export function CriptoSideMenuButton({
   isAnyMenuOpened,
   scrollViewCenterHeight,
   itemPositionCenterHeight, // corrigir este valor conforme o scroll muda de posição
+  selfKey,
+  setMenuOpenedNumber,
 }) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -24,6 +26,7 @@ export function CriptoSideMenuButton({
     if (isMenuOpen) {
       setIsMenuOpen(false);
       setIsAnyMenuOpened(false);
+      setMenuOpenedNumber(null);
       Animated.timing(showMenu, {
         toValue: 0,
         duration: 300,
@@ -34,6 +37,7 @@ export function CriptoSideMenuButton({
       if (!isAnyMenuOpened) {
         setIsMenuOpen(true);
         setIsAnyMenuOpened(true);
+        setMenuOpenedNumber(selfKey);
         Animated.timing(showMenu, {
           toValue: 1,
           duration: 300,
@@ -69,11 +73,7 @@ export function CriptoSideMenuButton({
               outputRange: [0, -100]
             })
           } : { translateY: 0 },
-          isAnyMenuOpened ? {
-            scaleX: showMenu
-          } : { scaleX: 1 },
         ],
-
     }}
     >
       {isMenuOpen ?
