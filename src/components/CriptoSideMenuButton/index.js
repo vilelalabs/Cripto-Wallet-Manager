@@ -10,7 +10,7 @@ export function CriptoSideMenuButton({
   setIsAnyMenuOpened,
   isAnyMenuOpened,
   scrollViewCenterHeight,
-  itemPositionCenterHeight, // corrigir este valor conforme o scroll muda de posição
+  itemPositionCenterHeight,
   selfKey,
   setMenuOpenedNumber,
 }) {
