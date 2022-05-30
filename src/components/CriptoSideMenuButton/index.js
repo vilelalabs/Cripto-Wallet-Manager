@@ -1,17 +1,26 @@
 import { List, X, Minus, CurrencyDollar } from 'phosphor-react-native';
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { View, Animated } from 'react-native'
 import { TouchableOpacity } from 'react-native';
 import { themes } from '../../themes';
 
 import { styles } from './styles';
 
-export function CriptoSideMenuButton({ setIsAnyMenuOpened, isAnyMenuOpened }) {
+export function CriptoSideMenuButton({
+  setIsAnyMenuOpened,
+  isAnyMenuOpened,
+  scrollViewCenterHeight,
+  itemPositionCenterHeight, // corrigir este valor conforme o scroll muda de posição
+}) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const showMenu = useRef(new Animated.Value(0)).current;
 
-  const handleOpenMenu = () => {
+  const handleOpenMenu = useCallback(() => {
+
+    //console.log('scrollViewCenterHeight:', scrollViewCenterHeight);
+    //console.log('itemPositionCenterHeight:', itemPositionCenterHeight);
+
     if (isMenuOpen) {
       setIsMenuOpen(false);
       setIsAnyMenuOpened(false);
@@ -34,28 +43,44 @@ export function CriptoSideMenuButton({ setIsAnyMenuOpened, isAnyMenuOpened }) {
     }
 
   }
+    , [isMenuOpen, isAnyMenuOpened, setIsMenuOpen, setIsAnyMenuOpened]);
+
 
   return (
     <Animated.View style={{
-      ...styles.container, height: showMenu.interpolate({
+      ...styles.container,
+      height: showMenu.interpolate({
         inputRange: [0, 1],
         outputRange: [50, 150]
-      }), backgroundColor: showMenu.interpolate({
+      }),
+      backgroundColor: showMenu.interpolate({
         inputRange: [0, 1],
         outputRange: [themes.colors.fifth, themes.colors.fourth]
-      }), zIndex: showMenu.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, 10]
       }),
       opacity: isAnyMenuOpened ? (showMenu.interpolate({
         inputRange: [0, 1],
         outputRange: [0.6, 1]
       })) : 1,
+      transform:
+        [
+          (itemPositionCenterHeight > scrollViewCenterHeight) ? {
+            translateY: showMenu.interpolate({
+              inputRange: [0, 1],
+              outputRange: [0, -100]
+            })
+          } : { translateY: 0 },
+          isAnyMenuOpened ? {
+            scaleX: showMenu
+          } : { scaleX: 1 },
+        ],
 
     }}
     >
       {isMenuOpen ?
-        <View style={styles.buttons} >
+        <View style={{
+          ...styles.buttons,
+          flexDirection: (itemPositionCenterHeight > scrollViewCenterHeight) ? 'column-reverse' : 'column',
+        }} >
           <TouchableOpacity onPress={handleOpenMenu}>
             <X weight='bold' size={32} />
           </TouchableOpacity>
@@ -72,7 +97,8 @@ export function CriptoSideMenuButton({ setIsAnyMenuOpened, isAnyMenuOpened }) {
           onPress={handleOpenMenu}
         >
           <List weight='bold' size={32} />
-        </TouchableOpacity>}
+        </TouchableOpacity>
+      }
     </Animated.View >
   );
 }

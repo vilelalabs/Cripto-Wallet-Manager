@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-
 import { styles } from './styles';
 
 import { CriptoItem } from '../CriptoItem';
@@ -37,9 +36,9 @@ const addedCoins = [
     quantity: 22,
   },
   {
-    name: 'Black Shiba',
-    symbol: 'BSHIB',
-    price: 0.00000046,
+    name: 'Shiba Inu',
+    symbol: 'SHIB',
+    price: 0.00000446,
     quantity: 10000000,
   },
   {
@@ -48,21 +47,42 @@ const addedCoins = [
     price: 0.0000046,
     quantity: 20000,
   },
+  {
+    name: 'BlackShiba',
+    symbol: 'BSHIB',
+    price: 0.0000000446,
+    quantity: 10000000,
+  },
+  {
+    name: 'Mana',
+    symbol: 'MANA',
+    price: 1.046,
+    quantity: 10,
+  },
+
 ];
 
 export function CriptoList() {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
+  const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
+
+
   return (
     <ScrollView
+      onContentSizeChange={(contentHeight) => setScrollViewCenterHeight(contentHeight / 2)}
       contentContainerStyle={{ flexGrow: 1 }}
       style={styles.container}>
       {addedCoins.map((coin, index) => (
+
         <CriptoItem
+          key={index}
           setIsAnyMenuOpened={setIsAnyMenuOpened}
           isAnyMenuOpened={isAnyMenuOpened}
-          key={index}
+          scrollViewCenterHeight={scrollViewCenterHeight}
+
           coin={coin}
-        />))
+        />
+      ))
       }
     </ScrollView>
   );

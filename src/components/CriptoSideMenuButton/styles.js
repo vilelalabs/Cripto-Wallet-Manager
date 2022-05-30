@@ -14,8 +14,8 @@ export const styles = StyleSheet.create({
   },
   buttons: {
     flex: 1,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 15,
+    marginBottom: 15,
     flexDirection: "column",
     justifyContent: "space-between",
 
