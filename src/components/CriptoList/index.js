@@ -73,7 +73,6 @@ export function CriptoList() {
       onContentSizeChange={(contentHeight) => setScrollViewCenterHeight(contentHeight / 2)}
       onScroll={event => {
         setScrollViewContentYOffset(event.nativeEvent.contentOffset.y);
-        console.log(scrollViewContentYOffset);
       }}
       contentContainerStyle={{ flexGrow: 1 }}
       style={styles.container}>
