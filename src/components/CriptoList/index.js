@@ -65,12 +65,16 @@ const addedCoins = [
 export function CriptoList() {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
+  const [scrollViewContentYOffset, setScrollViewContentYOffset] = useState(0);
   const [menuOpenedNumber, setMenuOpenedNumber] = useState(null);
-
 
   return (
     <ScrollView
       onContentSizeChange={(contentHeight) => setScrollViewCenterHeight(contentHeight / 2)}
+      onScroll={event => {
+        setScrollViewContentYOffset(event.nativeEvent.contentOffset.y);
+        console.log(scrollViewContentYOffset);
+      }}
       contentContainerStyle={{ flexGrow: 1 }}
       style={styles.container}>
       {addedCoins.map((coin, index) => (
@@ -83,7 +87,7 @@ export function CriptoList() {
 
           setIsAnyMenuOpened={setIsAnyMenuOpened}
           isAnyMenuOpened={isAnyMenuOpened}
-          scrollViewCenterHeight={scrollViewCenterHeight}
+          scrollViewCenterHeight={scrollViewCenterHeight + scrollViewContentYOffset}
 
           coin={coin}
         />
