@@ -31,5 +31,19 @@ export const styles = StyleSheet.create({
     color: themes.colors.first,
     fontSize: 20,
     fontWeight: 'bold',
-  }
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  qtde: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  qtdeText: {
+    color: themes.colors.first,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
 });

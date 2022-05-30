@@ -13,7 +13,6 @@ export default function App() {
     <View style={styles.container}>
       <Header />
       <CriptoList />
-      <TotalBalance/>
       <Widget />
     </View>
   );
