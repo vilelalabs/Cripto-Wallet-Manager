@@ -59,3 +59,9 @@ buck-out/
 # Ruby / CocoaPods
 /ios/Pods/
 /vendor/bundle/
+
+# API related files
+/src/services/GetDataFromAPI/apikey.js
+
+# "Junk Files"
+coins.json

@@ -8,7 +8,13 @@ import { CriptoList } from './components/CriptoList';
 import { AddQuantityPopup } from './components/AddQuantityPopup';
 
 
+
+const addedCoins = require('../coins.json');
+
+
 export default function App() {
+
+
   const [isPopupOpened, setIsPopupOpened] = useState(false);
   const [newQuantity, setNewQuantity] = useState(null);
 
@@ -18,14 +24,14 @@ export default function App() {
     if (isPopupOpened) {
       Animated.timing(showPopup, {
         toValue: 0,
-        duration: 500,
+        duration: 600,
         useNativeDriver: false
       }).start();
     }
     else {
       Animated.timing(showPopup, {
         toValue: 1,
-        duration: 500,
+        duration: 600,
         useNativeDriver: false
       }).start();
     }
