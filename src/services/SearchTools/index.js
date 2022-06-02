@@ -2,10 +2,15 @@
 import { LoadMap } from "../FileManagement";
 
 export async function SearchCoin(coinName) {
-    const name = coinName.toLowerCase();
+    let name = coinName.toLowerCase();
     const coins = await LoadMap();
 
-    const coinFound = coins.data.find(coin => coin.name.toLowerCase() === name);
+    let coinFound = coins.data.find(coin => coin.name.toLowerCase() === name);
+    if (!coinFound) {
+        name = coinName.toUpperCase();
+        coinFound = coins.data.find(coin => coin.symbol.toUpperCase() === name);
+    }
+
     let newCoinToAdd = null;
     if (coinFound) {
         newCoinToAdd = {

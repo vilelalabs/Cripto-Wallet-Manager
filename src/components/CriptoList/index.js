@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { styles } from './styles';
 
@@ -7,15 +7,21 @@ import { TotalBalance } from '../TotalBalance';
 
 const initData = require('../../../coins.json');
 
-const addedCoins = initData;
-
 const singleCoinHeight = 70;
 
-export function CriptoList({ setIsPopupOpened }) {
+export function CriptoList({ setIsPopupOpened, addedCoins }) {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
   const [scrollViewContentYOffset, setScrollViewContentYOffset] = useState(0);
   const [menuOpenedNumber, setMenuOpenedNumber] = useState(null);
+  const [allCoins, setAllCoins] = useState([]);
+
+  useEffect(() => {
+
+    //if any of items of allCoins is empty, delete it
+    console.log('allCoins:', allCoins);
+    setAllCoins((allCoins) => ([...allCoins, addedCoins]));
+  }, [addedCoins]);
 
   return (
     <>
@@ -26,7 +32,7 @@ export function CriptoList({ setIsPopupOpened }) {
         }}
         contentContainerStyle={{ flexGrow: 1 }}
         style={styles.container}>
-        {addedCoins.map((coin, index) => (
+        {allCoins.slice(1).map((coin, index) => (
 
           <CriptoItem
             key={index}
@@ -45,7 +51,7 @@ export function CriptoList({ setIsPopupOpened }) {
         }
       </ScrollView>
       <TotalBalance
-        coins={addedCoins}
+        coins={allCoins}
       />
     </>
   );

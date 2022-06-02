@@ -10,9 +10,11 @@ const headers = {
 
 // get data from selected coins
 export async function GetDataFromSelectedCoins(coins) {
-
-    // TODO: get all IDs from selected coins
-    // TODO: prepare string to put in the URL
+    let ids = [];
+    coins.forEach(coin => {
+        ids.push(coin.id);
+    });
+    let idsToSearch = ids.join(',');
 
     const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?id=${idsToSearch}&convert=BRL`;
     const response = await axios.get(url, {
@@ -38,7 +40,7 @@ export async function GetCoinsMap() {
 }
 
 /*
-{
+{ // exemplo de formato dos dados que serão utilizados do "map"
         "id": 19432,
         "name": "Netflix Tokenized Stock Zipmex",
      "symbol": "NFLX"

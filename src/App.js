@@ -12,7 +12,7 @@ import { LoadFile } from './services/FileManagement';
 export default function App() {
 
   const [isPopupOpened, setIsPopupOpened] = useState(false);
-  const [isSearchingCoins, setIsSearchingCoins] = useState(false); //ver como aplicar
+  const [isSearchingCoins, setIsSearchingCoins] = useState(false); //ver como aplicar do melhor modo
 
   const [newQuantity, setNewQuantity] = useState(null);
   const [addedCoins, setAddedCoins] = useState([]);
