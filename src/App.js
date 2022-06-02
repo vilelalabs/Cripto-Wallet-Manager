@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated } from 'react-native';
+import { Animated, ActivityIndicator } from 'react-native';
 import { styles } from './styles';
 
 import { Header } from './components/Header';
@@ -7,21 +7,32 @@ import { Widget } from './components/Widget';
 import { CriptoList } from './components/CriptoList';
 import { AddQuantityPopup } from './components/AddQuantityPopup';
 
-
-
-const addedCoins = require('../coins.json');
-
+import { LoadFile } from './services/FileManagement';
 
 export default function App() {
 
-
   const [isPopupOpened, setIsPopupOpened] = useState(false);
+  const [isSearchingCoins, setIsSearchingCoins] = useState(false); //ver como aplicar
+
   const [newQuantity, setNewQuantity] = useState(null);
+  const [addedCoins, setAddedCoins] = useState([]);
 
   const showPopup = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (isPopupOpened) {
+    if (!addedCoins) {
+      getCoins();
+    }
+  }, []);
+  const getCoins = async () => {
+    const coins = await LoadFile();
+    console.log('getCoins:', coins);
+    setAddedCoins((addedCoins) => ([...addedCoins, JSON.parse(coins)]));
+  };
+
+
+  useEffect(() => {
+    if (isPopupOpened || isSearchingCoins) {
       Animated.timing(showPopup, {
         toValue: 0,
         duration: 600,
@@ -35,7 +46,7 @@ export default function App() {
         useNativeDriver: false
       }).start();
     }
-  }, [isPopupOpened]);
+  }, [isPopupOpened, isSearchingCoins]);
 
 
   return (
@@ -53,14 +64,21 @@ export default function App() {
         <CriptoList
           setIsPopupOpened={setIsPopupOpened}
           newQuantity={newQuantity}
+          addedCoins={addedCoins}
         />
-        <Widget />
+        <Widget
+          setAddedCoins={setAddedCoins}
+        />
       </Animated.View>
       {isPopupOpened &&
         <AddQuantityPopup
           setIsPopupOpened={setIsPopupOpened}
           setNewQuantity={setNewQuantity}
         />}
+      {isSearchingCoins &&
+        <ActivityIndicator size="large" color="#0000ff" />
+      }
+
     </>
   );
 } 

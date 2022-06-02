@@ -1,17 +1,31 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import { View, TouchableOpacity, TextInput, Animated } from 'react-native';
 import { Plus } from 'phosphor-react-native';
 
 import { inputWidth, buttonWidth, styles } from './styles';
 import { themes } from '../../themes';
 
+import { SearchCoin } from '../../services/SearchTools';
 
-export function Widget() {
+
+export function Widget({ setAddedCoins, setIsSearchingCoins }) {
 
   const [isOpenToSelectCripto, setIsOpenToSelectCripto] = useState(false);
   const [searchText, setSearchText] = React.useState('');
+  const [newCoinToAdd, setNewCoinToAdd] = React.useState(null);
 
   const showInput = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (newCoinToAdd) {
+      console.log("new Coin: " + newCoinToAdd.name);
+      setAddedCoins(newCoinToAdd);
+
+    }
+
+  }, [newCoinToAdd])
+
+
   const handleOpenToSelectCripto = () => {
 
     if (isOpenToSelectCripto) {
@@ -55,6 +69,11 @@ export function Widget() {
           placeholderTextColor={themes.colors.textSecond}
           onPressIn={eraseInsertCriptoInputText}
           onChangeText={text => setSearchText(text)}
+          onSubmitEditing={async () => {
+            setNewCoinToAdd(await SearchCoin(searchText))
+            if (!newCoinToAdd) alert("Moeda não encontrada!");
+          }
+          }
           value={searchText}
         />
       </Animated.View>
