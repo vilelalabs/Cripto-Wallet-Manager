@@ -8,7 +8,11 @@ import { themes } from '../../themes';
 import { SearchCoin } from '../../services/SearchTools';
 import { AddCoin, LoadFile } from '../../services/FileManagement';
 
-export function Widget({ setAddedCoin, setAllCoins }) {
+export function Widget({
+  setAddedCoin,
+  setAllCoins,
+  setIsUpdatingCoins,
+}) {
 
   const [isOpenToSelectCripto, setIsOpenToSelectCripto] = useState(false);
   const [searchText, setSearchText] = React.useState('');
@@ -27,6 +31,7 @@ export function Widget({ setAddedCoin, setAllCoins }) {
   const handleAddCoin = async (newCoinToAdd) => {
     await AddCoin(newCoinToAdd);
     setAllCoins(await LoadFile());
+    setIsUpdatingCoins(false);
   }
 
 
@@ -74,6 +79,7 @@ export function Widget({ setAddedCoin, setAllCoins }) {
           onPressIn={eraseInsertCriptoInputText}
           onChangeText={text => setSearchText(text)}
           onSubmitEditing={async () => {
+            setIsUpdatingCoins(true);
             setNewCoinToAdd(await SearchCoin(searchText));
           }
           }

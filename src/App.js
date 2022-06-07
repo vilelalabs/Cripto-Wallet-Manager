@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, ActivityIndicator } from 'react-native';
+import { Animated, ActivityIndicator, Dimensions } from 'react-native';
 import { styles } from './styles';
 
 import { Header } from './components/Header';
@@ -9,14 +9,18 @@ import { AddQuantityPopup } from './components/AddQuantityPopup';
 
 import { LoadFile, CreateFileForFirstInit } from './services/FileManagement';
 import { GetCoinsMap } from './services/GetDataFromAPI';
+import { themes } from './themes';
 
 CreateFileForFirstInit();
 //GetCoinsMap();
 
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 export default function App() {
 
   const [isPopupOpened, setIsPopupOpened] = useState(false);
-  const [isSearchingCoins, setIsSearchingCoins] = useState(false); //ver como aplicar do melhor modo
+  const [isUpdatingCoins, setIsUpdatingCoins] = useState(false); //ver como aplicar do melhor modo
 
   const [newQuantity, setNewQuantity] = useState(null);
   const [addedCoin, setAddedCoin] = useState([]);
@@ -33,9 +37,8 @@ export default function App() {
     }
   }, [selectedCoin]);
 
-
   useEffect(() => {
-    if (isPopupOpened || isSearchingCoins) {
+    if (isPopupOpened || isUpdatingCoins) {
       Animated.timing(showPopup, {
         toValue: 0,
         duration: 600,
@@ -49,7 +52,7 @@ export default function App() {
         useNativeDriver: false
       }).start();
     }
-  }, [isPopupOpened, isSearchingCoins]);
+  }, [isPopupOpened, isUpdatingCoins]);
 
 
   return (
@@ -61,7 +64,7 @@ export default function App() {
           outputRange: [0.6, 1]
         })
       }}
-        pointerEvents={isPopupOpened ? 'none' : 'auto'}
+        pointerEvents={(isPopupOpened || isUpdatingCoins) ? 'none' : 'auto'}
       >
         <Header />
         <CriptoList
@@ -71,10 +74,12 @@ export default function App() {
           allCoins={allCoins}
           setSelectedCoin={setSelectedCoin}
           selectedCoin={selectedCoin}
+          setAllCoins={setAllCoins}
         />
         <Widget
           setAddedCoin={setAddedCoin}
           setAllCoins={setAllCoins}
+          setIsUpdatingCoins={setIsUpdatingCoins}
         />
       </Animated.View>
       {isPopupOpened &&
@@ -84,9 +89,15 @@ export default function App() {
           selectedCoin={selectedCoin}
           setSelectedCoin={setSelectedCoin}
           setAllCoins={setAllCoins}
+          setIsUpdatingCoins={setIsUpdatingCoins}
         />}
-      {isSearchingCoins &&
-        <ActivityIndicator size="large" color="#0000ff" />
+      {isUpdatingCoins &&
+        <ActivityIndicator style={{
+          position: "absolute",
+          top: (screenHeight / 2) - 15,
+          left: (screenWidth / 2) - 15
+        }}
+          size="large" color={themes.colors.fourth} />
       }
 
     </>

@@ -12,6 +12,10 @@ export async function SearchCoin(coinName) {
 
     }
 
+    if (coinFound.name.length >= 20) {
+        coinFound.name = coinFound.name.substring(0, 15);
+    }
+
     let newCoinToAdd = null;
     if (coinFound) {
         newCoinToAdd = {

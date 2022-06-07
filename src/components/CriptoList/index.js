@@ -5,16 +5,15 @@ import { styles } from './styles';
 import { CriptoItem } from '../CriptoItem';
 import { TotalBalance } from '../TotalBalance';
 
-import { LoadFile } from '../../services/FileManagement';
 
 const singleCoinHeight = 70;
 
 export function CriptoList({
   setIsPopupOpened,
-  //addedCoin,
   allCoins,
   setSelectedCoin,
-  selectedCoin
+  selectedCoin,
+  setAllCoins,
 }) {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
@@ -46,6 +45,7 @@ export function CriptoList({
             setSelectedCoin={setSelectedCoin}
             selectedCoin={selectedCoin}
             coin={coin}
+            setAllCoins={setAllCoins}
           />
         ))
         }

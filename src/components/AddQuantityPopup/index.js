@@ -12,7 +12,8 @@ export function AddQuantityPopup({
     setNewQuantity,
     selectedCoin,
     setSelectedCoin,
-    setAllCoins
+    setAllCoins,
+    setIsUpdatingCoins,
 }) {
 
     const [quantity, setQuantity] = React.useState(null);
@@ -61,12 +62,14 @@ export function AddQuantityPopup({
                 <TouchableOpacity
                     style={styles.button}
                     onPress={async () => {
+                        setIsUpdatingCoins(true);
                         setNewQuantity(quantity);
                         setIsPopupOpened(false);
                         setSelectedCoin((selectedCoin) => ({ ...selectedCoin, quantity: quantity }));
                         // save quantity to coin on file
                         await UpdateCoinQuantity(selectedCoin, quantity);
                         setAllCoins(await LoadFile());
+                        setIsUpdatingCoins(false);
                     }}
                 >
                     <Text style={styles.buttonText}>

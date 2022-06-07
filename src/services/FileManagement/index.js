@@ -25,8 +25,8 @@ export async function RemoveCoin(coin) {
     if (typeof coins !== 'object') {
         coins = JSON.parse(coins);
     }
-    coins = coins.filter(c => c.symbol !== coin.symbol);
-    await AsyncStorage.setItem('@coins', JSON.stringify(coins));
+    let coinsUpdated = coins.filter(c => c.symbol !== coin.symbol);
+    await AsyncStorage.setItem('@coins', JSON.stringify(coinsUpdated));
 }
 
 export async function UpdateCoinQuantity(coin, quantity) {
@@ -66,6 +66,7 @@ export async function LoadFile() {
 }
 
 export async function SaveMap(map) {
+
     const JSONfile = JSON.stringify(map);
     try {
         await AsyncStorage.setItem('@map', JSONfile);

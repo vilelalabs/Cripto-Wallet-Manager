@@ -6,6 +6,9 @@ import { themes } from '../../themes';
 
 import { styles } from './styles';
 
+import { LoadFile, RemoveCoin } from '../../services/FileManagement';
+
+
 export function CriptoSideMenuButton({
   setIsPopupOpened,
   setIsAnyMenuOpened,
@@ -16,6 +19,7 @@ export function CriptoSideMenuButton({
   setMenuOpenedNumber,
   setSelectedCoin,
   coin,
+  setAllCoins
 }) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -53,9 +57,13 @@ export function CriptoSideMenuButton({
     setSelectedCoin(coin);
   }, []);
 
-  const handleDeleteCoin = useCallback(() => {
+  const handleDeleteCoin = async () => {
     console.log('delete coin');
-  }, []);
+    await RemoveCoin(coin);
+    setAllCoins(await LoadFile());
+  };
+
+
 
   return (
     <Animated.View style={{
@@ -99,9 +107,9 @@ export function CriptoSideMenuButton({
             <CurrencyDollar weight='bold' size={32} />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => {
+          <TouchableOpacity onPress={async () => {
             handleOpenMenu();
-            handleDeleteCoin();
+            await handleDeleteCoin();
           }}>
             <Minus weight='bold' size={32} />
           </TouchableOpacity>
