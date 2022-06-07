@@ -26,12 +26,10 @@ export default function App() {
   const showPopup = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    //changes  selectedCoin inside addedCoin to the new selectedCoin
+    //changes selectedCoin inside addedCoin to the new selectedCoin
     if (selectedCoin) {
       if (!addedCoin)
         getCoins();
-      console.log('selectedCoin:', selectedCoin);
-
     }
   }, [selectedCoin]);
 

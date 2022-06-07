@@ -74,7 +74,6 @@ export function Widget({ setAddedCoin, setAllCoins }) {
           onPressIn={eraseInsertCriptoInputText}
           onChangeText={text => setSearchText(text)}
           onSubmitEditing={async () => {
-            console.log("searchText: ", searchText);
             setNewCoinToAdd(await SearchCoin(searchText));
           }
           }

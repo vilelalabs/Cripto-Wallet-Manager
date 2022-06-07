@@ -17,7 +17,6 @@ export async function AddCoin(coin) {
     }
     coins.push(coin);
     await GetDataFromSelectedCoins(coins);
-    console.log("coins_in_function_AddCoin()) --> ", coins);
     await AsyncStorage.setItem('@coins', JSON.stringify(coins));
 }
 
@@ -32,17 +31,13 @@ export async function RemoveCoin(coin) {
 
 export async function UpdateCoinQuantity(coin, quantity) {
 
-    console.log("selectedCoin inside UPDATE_FUNCTION: ", coin);
-
     let coins = await LoadFile();
-
     let coinsUpdated = coins.map(c => {
         if (c.symbol === coin.symbol) {
             c.quantity = quantity;
         }
         return c;
     });
-    console.log("AFTER UpdateCoinQuantity_COINS --> ", coinsUpdated);
     await AsyncStorage.setItem('@coins', JSON.stringify(coinsUpdated));
 }
 

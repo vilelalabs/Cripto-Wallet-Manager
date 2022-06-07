@@ -49,7 +49,6 @@ export function CriptoSideMenuButton({
   }, [isMenuOpen, isAnyMenuOpened, setIsMenuOpen, setIsAnyMenuOpened]);
 
   const handleAddQuantity = useCallback(() => {
-    console.log('add quantity');
     setIsPopupOpened(true);
     setSelectedCoin(coin);
   }, []);
