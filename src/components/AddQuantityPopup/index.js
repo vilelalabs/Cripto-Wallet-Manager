@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { themes } from '../../themes';
 
 import { styles } from './styles';
 
-//import { GetCoinsMap }    from '../../services/GetDataFromAPI';
-//import { LoadMap }        from '../../services/FileManagement';//
-import { SearchCoin } from '../../services/SearchTools';
+import { LoadFile, UpdateCoinQuantity } from '../../services/FileManagement';
 
-export function AddQuantityPopup({ setIsPopupOpened, setNewQuantity }) {
+
+export function AddQuantityPopup({
+    setIsPopupOpened,
+    setNewQuantity,
+    selectedCoin,
+    setSelectedCoin,
+    setAllCoins
+}) {
 
     const [quantity, setQuantity] = React.useState(null);
 
-    const selectedCoin = {
-        name: 'Bitcoin',
-        symbol: 'BTC',
-    }
     return (
         <View style={styles.container}>
             <Text style={styles.label}>
@@ -32,7 +33,7 @@ export function AddQuantityPopup({ setIsPopupOpened, setNewQuantity }) {
                     let qtde = text.replace(/[- #*;<>\{\}\[\]\\\/]/gi, '');
                     //changes comma to dot
                     qtde = qtde.replace(/[,]/gi, '.');
-                    //refuse to accept addins another decimal point
+                    //refuse to accept adding of another decimal point
                     if (qtde.indexOf('.') !== -1 && qtde.split('.').length > 2) {
                         qtde = qtde.substring(0, qtde.length - 1);
                     }
@@ -50,7 +51,6 @@ export function AddQuantityPopup({ setIsPopupOpened, setNewQuantity }) {
                     onPress={() => {
                         setNewQuantity(null);
                         setIsPopupOpened(false);
-
                     }}
                 >
                     <Text style={styles.buttonText}>
@@ -63,10 +63,10 @@ export function AddQuantityPopup({ setIsPopupOpened, setNewQuantity }) {
                     onPress={async () => {
                         setNewQuantity(quantity);
                         setIsPopupOpened(false);
+                        setSelectedCoin((selectedCoin) => ({ ...selectedCoin, quantity: quantity }));
                         // save quantity to coin on file
-                        //await GetCoinsMap();
-                        //console.log(await SearchCoin('Baby Doge Coin'));
-
+                        await UpdateCoinQuantity(selectedCoin, quantity);
+                        setAllCoins(await LoadFile());
                     }}
                 >
                     <Text style={styles.buttonText}>

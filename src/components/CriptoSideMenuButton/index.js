@@ -14,6 +14,8 @@ export function CriptoSideMenuButton({
   itemPositionCenterHeight,
   selfKey,
   setMenuOpenedNumber,
+  setSelectedCoin,
+  coin,
 }) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -49,6 +51,7 @@ export function CriptoSideMenuButton({
   const handleAddQuantity = useCallback(() => {
     console.log('add quantity');
     setIsPopupOpened(true);
+    setSelectedCoin(coin);
   }, []);
 
   const handleDeleteCoin = useCallback(() => {

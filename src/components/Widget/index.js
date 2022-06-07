@@ -6,9 +6,9 @@ import { inputWidth, buttonWidth, styles } from './styles';
 import { themes } from '../../themes';
 
 import { SearchCoin } from '../../services/SearchTools';
+import { AddCoin, LoadFile } from '../../services/FileManagement';
 
-
-export function Widget({ setAddedCoins, setIsSearchingCoins }) {
+export function Widget({ setAddedCoin, setAllCoins }) {
 
   const [isOpenToSelectCripto, setIsOpenToSelectCripto] = useState(false);
   const [searchText, setSearchText] = React.useState('');
@@ -18,12 +18,16 @@ export function Widget({ setAddedCoins, setIsSearchingCoins }) {
 
   useEffect(() => {
     if (newCoinToAdd) {
-      console.log("new Coin: " + newCoinToAdd.name);
-      setAddedCoins(newCoinToAdd);
-
+      setAddedCoin(newCoinToAdd);
+      handleAddCoin(newCoinToAdd);
     }
 
-  }, [newCoinToAdd])
+  }, [newCoinToAdd]);
+
+  const handleAddCoin = async (newCoinToAdd) => {
+    await AddCoin(newCoinToAdd);
+    setAllCoins(await LoadFile());
+  }
 
 
   const handleOpenToSelectCripto = () => {
@@ -70,8 +74,8 @@ export function Widget({ setAddedCoins, setIsSearchingCoins }) {
           onPressIn={eraseInsertCriptoInputText}
           onChangeText={text => setSearchText(text)}
           onSubmitEditing={async () => {
-            setNewCoinToAdd(await SearchCoin(searchText))
-            if (!newCoinToAdd) alert("Moeda não encontrada!");
+            console.log("searchText: ", searchText);
+            setNewCoinToAdd(await SearchCoin(searchText));
           }
           }
           value={searchText}

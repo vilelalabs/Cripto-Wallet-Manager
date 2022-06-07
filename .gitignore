@@ -65,3 +65,4 @@ buck-out/
 
 # "Junk Files"
 coins.json
+coinsBackup.json

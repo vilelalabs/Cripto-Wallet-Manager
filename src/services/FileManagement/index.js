@@ -5,39 +5,52 @@ const AsyncStorage = new Store('store1');
 
 let initData = require('../../../coins.json');
 
+import { GetDataFromSelectedCoins } from "../../services/GetDataFromAPI";
+
 
 // ======== INDIVIDUAL COINS FUNCTIONS ========
 
 export async function AddCoin(coin) {
     let coins = await LoadFile();
-    coins = JSON.parse(coins);
+    if (typeof coins !== 'object') {
+        coins = JSON.parse(coins);
+    }
     coins.push(coin);
+    await GetDataFromSelectedCoins(coins);
+    console.log("coins_in_function_AddCoin()) --> ", coins);
     await AsyncStorage.setItem('@coins', JSON.stringify(coins));
 }
 
 export async function RemoveCoin(coin) {
     let coins = await LoadFile();
-    coins = JSON.parse(coins);
+    if (typeof coins !== 'object') {
+        coins = JSON.parse(coins);
+    }
     coins = coins.filter(c => c.symbol !== coin.symbol);
     await AsyncStorage.setItem('@coins', JSON.stringify(coins));
 }
 
 export async function UpdateCoinQuantity(coin, quantity) {
+
+    console.log("selectedCoin inside UPDATE_FUNCTION: ", coin);
+
     let coins = await LoadFile();
-    coins = JSON.parse(coins);
-    coins.forEach(c => {
+
+    let coinsUpdated = coins.map(c => {
         if (c.symbol === coin.symbol) {
             c.quantity = quantity;
         }
+        return c;
     });
-    await AsyncStorage.setItem('@coins', JSON.stringify(coins));
+    console.log("AFTER UpdateCoinQuantity_COINS --> ", coinsUpdated);
+    await AsyncStorage.setItem('@coins', JSON.stringify(coinsUpdated));
 }
 
 
 // ======== WHOLE FILE RELATED FUNCTIONS ========
 
-export async function SaveCoins(addedCoins) {
-    const JSONfile = JSON.stringify(addedCoins);
+export async function SaveCoins(addedCoin) {
+    const JSONfile = JSON.stringify(addedCoin);
 
     try {
         await AsyncStorage.setItem('@coins', JSONfile);
@@ -79,4 +92,5 @@ export async function LoadMap() {
 
 export async function CreateFileForFirstInit() {
     await SaveCoins(initData);
+    console.log("<File @coins restarted>")
 }

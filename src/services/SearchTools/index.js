@@ -9,6 +9,7 @@ export async function SearchCoin(coinName) {
     if (!coinFound) {
         name = coinName.toUpperCase();
         coinFound = coins.data.find(coin => coin.symbol.toUpperCase() === name);
+
     }
 
     let newCoinToAdd = null;

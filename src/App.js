@@ -7,7 +7,11 @@ import { Widget } from './components/Widget';
 import { CriptoList } from './components/CriptoList';
 import { AddQuantityPopup } from './components/AddQuantityPopup';
 
-import { LoadFile } from './services/FileManagement';
+import { LoadFile, CreateFileForFirstInit } from './services/FileManagement';
+import { GetCoinsMap } from './services/GetDataFromAPI';
+
+CreateFileForFirstInit();
+//GetCoinsMap();
 
 export default function App() {
 
@@ -15,20 +19,21 @@ export default function App() {
   const [isSearchingCoins, setIsSearchingCoins] = useState(false); //ver como aplicar do melhor modo
 
   const [newQuantity, setNewQuantity] = useState(null);
-  const [addedCoins, setAddedCoins] = useState([]);
+  const [addedCoin, setAddedCoin] = useState([]);
+  const [allCoins, setAllCoins] = useState([]);
+  const [selectedCoin, setSelectedCoin] = useState(null);
 
   const showPopup = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (!addedCoins) {
-      getCoins();
+    //changes  selectedCoin inside addedCoin to the new selectedCoin
+    if (selectedCoin) {
+      if (!addedCoin)
+        getCoins();
+      console.log('selectedCoin:', selectedCoin);
+
     }
-  }, []);
-  const getCoins = async () => {
-    const coins = await LoadFile();
-    console.log('getCoins:', coins);
-    setAddedCoins((addedCoins) => ([...addedCoins, JSON.parse(coins)]));
-  };
+  }, [selectedCoin]);
 
 
   useEffect(() => {
@@ -64,16 +69,23 @@ export default function App() {
         <CriptoList
           setIsPopupOpened={setIsPopupOpened}
           newQuantity={newQuantity}
-          addedCoins={addedCoins}
+          addedCoin={addedCoin}
+          allCoins={allCoins}
+          setSelectedCoin={setSelectedCoin}
+          selectedCoin={selectedCoin}
         />
         <Widget
-          setAddedCoins={setAddedCoins}
+          setAddedCoin={setAddedCoin}
+          setAllCoins={setAllCoins}
         />
       </Animated.View>
       {isPopupOpened &&
         <AddQuantityPopup
           setIsPopupOpened={setIsPopupOpened}
           setNewQuantity={setNewQuantity}
+          selectedCoin={selectedCoin}
+          setSelectedCoin={setSelectedCoin}
+          setAllCoins={setAllCoins}
         />}
       {isSearchingCoins &&
         <ActivityIndicator size="large" color="#0000ff" />

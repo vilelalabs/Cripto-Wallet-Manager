@@ -6,7 +6,6 @@ import { themes } from '../../themes';
 import { styles } from './styles';
 
 export function TotalBalance({ coins }) {
-  const [existsQuantity, setExistsQuantity] = React.useState(true);
   const [selectedCurrency, setSelectedCurrency] = React.useState('R$');
   const [totalBalance, setTotalBalance] = React.useState(0);
 
@@ -24,7 +23,7 @@ export function TotalBalance({ coins }) {
       <Text style={styles.name}>Balanço Total:</Text>
       <View style={styles.value}>
         {
-          existsQuantity ?
+          (totalBalance) ?
             <View style={styles.value}>
               <Text style={styles.valueText}>{selectedCurrency + '  '}</Text>
               <Text style={styles.valueText}>{totalBalance.toFixed(2)}</Text>

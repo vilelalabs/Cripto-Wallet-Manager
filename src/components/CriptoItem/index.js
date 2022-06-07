@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Animated } from 'react-native';
 import { CriptoSideMenuButton } from '../CriptoSideMenuButton';
 import { CriptoValue } from '../CriptoValue';
@@ -14,9 +14,15 @@ export function CriptoItem({
   selfKey,
   setMenuOpenedNumber,
   menuOpenedNumber,
+  setSelectedCoin,
 }) {
 
   const [itemPositionCenterHeight, setItemPositionCenterHeight] = useState(0);
+
+  useEffect(() => {
+    // redraw component every time coin changes ???
+  }, [coin]);
+
 
   return (
     <Animated.View
@@ -41,6 +47,9 @@ export function CriptoItem({
 
         selfKey={selfKey}
         setMenuOpenedNumber={setMenuOpenedNumber}
+
+        setSelectedCoin={setSelectedCoin}
+        coin={coin}
       />
     </Animated.View>
   );

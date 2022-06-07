@@ -5,23 +5,21 @@ import { styles } from './styles';
 import { CriptoItem } from '../CriptoItem';
 import { TotalBalance } from '../TotalBalance';
 
-const initData = require('../../../coins.json');
+import { LoadFile } from '../../services/FileManagement';
 
 const singleCoinHeight = 70;
 
-export function CriptoList({ setIsPopupOpened, addedCoins }) {
+export function CriptoList({
+  setIsPopupOpened,
+  //addedCoin,
+  allCoins,
+  setSelectedCoin,
+  selectedCoin
+}) {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
   const [scrollViewContentYOffset, setScrollViewContentYOffset] = useState(0);
   const [menuOpenedNumber, setMenuOpenedNumber] = useState(null);
-  const [allCoins, setAllCoins] = useState([]);
-
-  useEffect(() => {
-
-    //if any of items of allCoins is empty, delete it
-    console.log('allCoins:', allCoins);
-    setAllCoins((allCoins) => ([...allCoins, addedCoins]));
-  }, [addedCoins]);
 
   return (
     <>
@@ -32,7 +30,7 @@ export function CriptoList({ setIsPopupOpened, addedCoins }) {
         }}
         contentContainerStyle={{ flexGrow: 1 }}
         style={styles.container}>
-        {allCoins.slice(1).map((coin, index) => (
+        {allCoins.map((coin, index) => (
 
           <CriptoItem
             key={index}
@@ -45,6 +43,8 @@ export function CriptoList({ setIsPopupOpened, addedCoins }) {
             isAnyMenuOpened={isAnyMenuOpened}
             scrollViewCenterHeight={scrollViewCenterHeight + scrollViewContentYOffset + singleCoinHeight}
 
+            setSelectedCoin={setSelectedCoin}
+            selectedCoin={selectedCoin}
             coin={coin}
           />
         ))
