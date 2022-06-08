@@ -7,12 +7,10 @@ import { Widget } from './components/Widget';
 import { CriptoList } from './components/CriptoList';
 import { AddQuantityPopup } from './components/AddQuantityPopup';
 
-import { LoadFile, CreateFileForFirstInit } from './services/FileManagement';
+import { LoadFile } from './services/FileManagement';
 import { GetCoinsMap } from './services/GetDataFromAPI';
 import { themes } from './themes';
 
-CreateFileForFirstInit();
-//GetCoinsMap();
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -28,6 +26,16 @@ export default function App() {
   const [selectedCoin, setSelectedCoin] = useState(null);
 
   const showPopup = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    handleAppStarting();
+  }, []);
+
+  const handleAppStarting = async () => {
+    await GetCoinsMap();
+    setAllCoins(await LoadFile());
+  }
+
 
   useEffect(() => {
     //changes selectedCoin inside addedCoin to the new selectedCoin
@@ -75,6 +83,7 @@ export default function App() {
           setSelectedCoin={setSelectedCoin}
           selectedCoin={selectedCoin}
           setAllCoins={setAllCoins}
+          setIsUpdatingCoins={setIsUpdatingCoins}
         />
         <Widget
           setAddedCoin={setAddedCoin}

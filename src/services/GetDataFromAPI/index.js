@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const { getMyAPIKey } = require('./apikey.js')
 import { Alert } from 'react-native'
-import { SaveMap, SaveCoins } from '../FileManagement/index.js';
+import { LoadMap, SaveMap } from '../FileManagement/index.js';
 
 const headers = {
     'X-CMC_PRO_API_KEY': getMyAPIKey()
@@ -39,10 +39,19 @@ export async function GetDataFromSelectedCoins(coins) {
 
 export async function GetCoinsMap() {
     const url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/map`;
-    const response = await axios.get(url, {
-        headers: headers
-    });
+
+    // check if @map file already exists
+    let map = await LoadMap();
+    if (map !== null) {
+        console.log("Map Already Exists.. a new map will NOT be requested!");
+        return;
+    }
+
     try {
+        const response = await axios.get(url, {
+            headers: headers
+        });
+
         if (response) {
             await SaveMap(response.data);
             console.log("Map Saved!");
@@ -51,12 +60,3 @@ export async function GetCoinsMap() {
         console.log("Error getting map >> " + error);
     }
 }
-
-
-/* 
-{ // exemplo de formato dos dados que serão utilizados do "map"
-        "id": 19432,
-        "name": "Netflix Tokenized Stock Zipmex",
-     "symbol": "NFLX"
-}
-*/

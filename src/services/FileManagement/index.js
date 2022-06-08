@@ -59,7 +59,7 @@ export async function SaveCoins(addedCoin) {
 export async function LoadFile() {
     try {
         const jsonValue = await AsyncStorage.getItem('@coins')
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
+        return jsonValue != null ? JSON.parse(jsonValue) : [];
     } catch (e) {
         console.log("Error loading data >> " + e);
     }
@@ -83,6 +83,7 @@ export async function LoadMap() {
         return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch (e) {
         console.log("Error loading data >> " + e);
+        return null;
     }
 }
 

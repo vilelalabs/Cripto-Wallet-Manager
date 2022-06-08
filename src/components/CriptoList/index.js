@@ -14,6 +14,7 @@ export function CriptoList({
   setSelectedCoin,
   selectedCoin,
   setAllCoins,
+  setIsUpdatingCoins,
 }) {
   const [isAnyMenuOpened, setIsAnyMenuOpened] = useState(false);
   const [scrollViewCenterHeight, setScrollViewCenterHeight] = useState(0);
@@ -46,6 +47,8 @@ export function CriptoList({
             selectedCoin={selectedCoin}
             coin={coin}
             setAllCoins={setAllCoins}
+
+            setIsUpdatingCoins={setIsUpdatingCoins}
           />
         ))
         }

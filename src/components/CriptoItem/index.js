@@ -15,7 +15,8 @@ export function CriptoItem({
   setMenuOpenedNumber,
   menuOpenedNumber,
   setSelectedCoin,
-  setAllCoins
+  setAllCoins,
+  setIsUpdatingCoins
 }) {
 
   const [itemPositionCenterHeight, setItemPositionCenterHeight] = useState(0);
@@ -52,6 +53,8 @@ export function CriptoItem({
         setSelectedCoin={setSelectedCoin}
         setAllCoins={setAllCoins}
         coin={coin}
+
+        setIsUpdatingCoins={setIsUpdatingCoins}
       />
     </Animated.View>
   );

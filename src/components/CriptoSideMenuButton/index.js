@@ -19,7 +19,8 @@ export function CriptoSideMenuButton({
   setMenuOpenedNumber,
   setSelectedCoin,
   coin,
-  setAllCoins
+  setAllCoins,
+  setIsUpdatingCoins
 }) {
 
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -58,9 +59,10 @@ export function CriptoSideMenuButton({
   }, []);
 
   const handleDeleteCoin = async () => {
-    console.log('delete coin');
+    setIsUpdatingCoins(true);
     await RemoveCoin(coin);
     setAllCoins(await LoadFile());
+    setIsUpdatingCoins(false);
   };
 
 
