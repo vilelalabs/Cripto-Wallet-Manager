@@ -12,6 +12,8 @@ export function Widget({
   setAddedCoin,
   setAllCoins,
   setIsUpdatingCoins,
+  setIsPopupOpened,
+  setSelectedCoin,
 }) {
 
   const [isOpenToSelectCripto, setIsOpenToSelectCripto] = useState(false);
@@ -30,6 +32,8 @@ export function Widget({
 
   const handleAddCoin = async (newCoinToAdd) => {
     await AddCoin(newCoinToAdd);
+    setSelectedCoin(newCoinToAdd);
+    setIsPopupOpened(true);
     setAllCoins(await LoadFile());
     setIsUpdatingCoins(false);
   }
@@ -81,6 +85,7 @@ export function Widget({
           onSubmitEditing={async () => {
             setIsUpdatingCoins(true);
             setNewCoinToAdd(await SearchCoin(searchText));
+            eraseInsertCriptoInputText();
           }
           }
           value={searchText}

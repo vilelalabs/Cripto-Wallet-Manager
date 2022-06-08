@@ -43,7 +43,6 @@ export async function GetCoinsMap() {
     // check if @map file already exists
     let map = await LoadMap();
     if (map !== null) {
-        console.log("Map Already Exists.. a new map will NOT be requested!");
         return;
     }
 
@@ -54,7 +53,6 @@ export async function GetCoinsMap() {
 
         if (response) {
             await SaveMap(response.data);
-            console.log("Map Saved!");
         }
     } catch (error) {
         console.log("Error getting map >> " + error);

@@ -85,6 +85,8 @@ export default function App() {
           setAddedCoin={setAddedCoin}
           setAllCoins={setAllCoins}
           setIsUpdatingCoins={setIsUpdatingCoins}
+          setIsPopupOpened={setIsPopupOpened}
+          setSelectedCoin={setSelectedCoin}
         />
       </Animated.View>
       {isPopupOpened &&
@@ -101,7 +103,7 @@ export default function App() {
           <ActivityIndicator
             style={styles.loadingIndicator}
             size="large"
-            color={themes.colors.fourth} />
+            color={themes.colors.sixth} />
           <Text style={styles.loadingText}>
             Atualizando Dados...
           </Text>
