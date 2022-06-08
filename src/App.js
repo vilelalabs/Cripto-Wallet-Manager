@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Animated, ActivityIndicator, Dimensions } from 'react-native';
+import { Animated, ActivityIndicator, Text } from 'react-native';
 import { styles } from './styles';
 
 import { Header } from './components/Header';
@@ -11,14 +11,10 @@ import { LoadFile } from './services/FileManagement';
 import { GetCoinsMap } from './services/GetDataFromAPI';
 import { themes } from './themes';
 
-
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
-
 export default function App() {
 
   const [isPopupOpened, setIsPopupOpened] = useState(false);
-  const [isUpdatingCoins, setIsUpdatingCoins] = useState(false); //ver como aplicar do melhor modo
+  const [isUpdatingCoins, setIsUpdatingCoins] = useState(false);
 
   const [newQuantity, setNewQuantity] = useState(null);
   const [addedCoin, setAddedCoin] = useState([]);
@@ -101,12 +97,15 @@ export default function App() {
           setIsUpdatingCoins={setIsUpdatingCoins}
         />}
       {isUpdatingCoins &&
-        <ActivityIndicator style={{
-          position: "absolute",
-          top: (screenHeight / 2) - 15,
-          left: (screenWidth / 2) - 15
-        }}
-          size="large" color={themes.colors.fourth} />
+        <>
+          <ActivityIndicator
+            style={styles.loadingIndicator}
+            size="large"
+            color={themes.colors.fourth} />
+          <Text style={styles.loadingText}>
+            Atualizando Dados...
+          </Text>
+        </>
       }
 
     </>

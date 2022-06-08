@@ -65,6 +65,15 @@ export async function LoadFile() {
     }
 }
 
+
+export async function CreateFileForFirstInit() {
+    await SaveCoins(initData);
+    console.log("<File @coins restarted>")
+}
+
+
+// ======== COINS MAP RELATED FUNCTIONS ========
+
 export async function SaveMap(map) {
 
     const JSONfile = JSON.stringify(map);
@@ -85,9 +94,4 @@ export async function LoadMap() {
         console.log("Error loading data >> " + e);
         return null;
     }
-}
-
-export async function CreateFileForFirstInit() {
-    await SaveCoins(initData);
-    console.log("<File @coins restarted>")
 }
