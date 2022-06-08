@@ -6,6 +6,7 @@ export const themes = {
         third: '#F08B33',
         fourth: '#D75404',
         fifth: '#8A2C02',
+        sixth: '#0000FF',
         textSecond: '#DFDFDF',
     }
 }

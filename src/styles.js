@@ -28,6 +28,6 @@ export const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
 
-        color: themes.colors.fourth,
+        color: themes.colors.sixth,
     }
 });
