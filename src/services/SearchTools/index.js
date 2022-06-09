@@ -12,6 +12,9 @@ export async function SearchCoin(coinName) {
 
     }
 
+    if (coinFound == undefined)
+        return undefined;
+
     if (coinFound.name.length >= 20) {
         coinFound.name = coinFound.name.substring(0, 15);
     }

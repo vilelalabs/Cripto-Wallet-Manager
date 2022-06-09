@@ -1,5 +1,5 @@
 import React, { useRef, useCallback, useState, useEffect } from 'react';
-import { View, TouchableOpacity, TextInput, Animated } from 'react-native';
+import { View, TouchableOpacity, TextInput, Animated, Alert } from 'react-native';
 import { Plus } from 'phosphor-react-native';
 
 import { inputWidth, buttonWidth, styles } from './styles';
@@ -23,9 +23,18 @@ export function Widget({
   const showInput = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    if (newCoinToAdd) {
+    if (newCoinToAdd !== null && newCoinToAdd !== undefined) {
       setAddedCoin(newCoinToAdd);
       handleAddCoin(newCoinToAdd);
+    }
+
+    else if (newCoinToAdd === undefined) {
+      Alert.alert('Error', 'Moeda não encontrada!');
+      setIsUpdatingCoins(false);
+    }
+
+    return () => {
+      setNewCoinToAdd(null);
     }
 
   }, [newCoinToAdd]);
