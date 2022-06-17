@@ -41,6 +41,15 @@ export async function UpdateCoinQuantity(coin, quantity) {
     await AsyncStorage.setItem('@coins', JSON.stringify(coinsUpdated));
 }
 
+export async function CoinPriceAutoUpdate() {
+    let coins = await LoadFile();
+    if (typeof coins !== 'object') {
+        coins = JSON.parse(coins);
+    }
+    await GetDataFromSelectedCoins(coins);
+    await AsyncStorage.setItem('@coins', JSON.stringify(coins));
+}
+
 
 // ======== WHOLE FILE RELATED FUNCTIONS ========
 

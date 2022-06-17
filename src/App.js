@@ -11,6 +11,8 @@ import { LoadFile } from './services/FileManagement';
 import { GetCoinsMap } from './services/GetDataFromAPI';
 import { themes } from './themes';
 
+import { CoinPriceAutoUpdate } from './services/FileManagement';
+
 export default function App() {
 
   const [isPopupOpened, setIsPopupOpened] = useState(false);
@@ -28,10 +30,17 @@ export default function App() {
   }, []);
 
   const handleAppStarting = async () => {
+    // execute on Init
     await GetCoinsMap();
+    await CoinPriceAutoUpdate();
     setAllCoins(await LoadFile());
-  }
 
+    // schedule next auto executions
+    setInterval(async () => {
+      await CoinPriceAutoUpdate();
+      setAllCoins(await LoadFile());
+    }, 60000 * 5);
+  }
 
   useEffect(() => {
     //changes selectedCoin inside addedCoin to the new selectedCoin

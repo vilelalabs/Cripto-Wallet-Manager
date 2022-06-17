@@ -4,7 +4,7 @@ import { themes } from '../../themes';
 
 import { styles } from './styles';
 
-import { LoadFile, UpdateCoinQuantity } from '../../services/FileManagement';
+import { LoadFile, UpdateCoinQuantity, CoinPriceAutoUpdate } from '../../services/FileManagement';
 
 
 export function AddQuantityPopup({
